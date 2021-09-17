@@ -3,9 +3,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import PropTypes from 'prop-types'; // ES6
 
 const GroupList = ({items,valueProperty,activeProperty,onItemSelect,selected}) => {
-    console.log('items',items)
     const groupListItems = Object.keys(items).map((item,index) => {
-        console.log('items[item]',items[item])
         let isSelected = ''
         if (selected) {
             isSelected = items[item].name === selected.name ? 'active' : ''

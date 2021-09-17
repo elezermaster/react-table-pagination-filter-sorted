@@ -3,10 +3,6 @@ import Users from './components/users'
 import api from './API'
 
 function App() {
-  console.log('api',api.users.fetchAll()
-  .then(data => {
-    console.log("dataaa",data)
-  }))
   const [users, setUsers] = useState()
   useEffect(() => {
     api.users.fetchAll()
@@ -27,12 +23,13 @@ function App() {
   }
   return (
     <div className="App">
-      <Users
-        onDelete={handleDelete}
-        onToggleBookmark={handleToggleBookMark}
-        users={users}
-      />
-
+      {users &&
+            <Users
+            onDelete={handleDelete}
+            onToggleBookmark={handleToggleBookMark}
+            users={users}
+          />
+      }
     </div>
   );
 }

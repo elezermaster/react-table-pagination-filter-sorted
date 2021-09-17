@@ -10,8 +10,6 @@ const PaginationUsers = ({
 }) => {
   const pageCount = Math.ceil(itemsCount / pageSize);
   if (pageCount === 1) return null;
-  //const pages = lodash.react(1, pageCount+1)
-  console.log("activePage", activePage);
   const items = [];
   for (let number = 1; number <= pageCount; number++) {
     items.push(
