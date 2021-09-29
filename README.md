@@ -5,7 +5,7 @@
 :point_right: filtering
 :point_right: sorting
 
-** using [lodash](https://lodash.com/docs/4.17.15) for sorting: **
+**using [lodash](https://lodash.com/docs/4.17.15) for sorting:**
 ```bash
 npm i --save lodash
 ```
