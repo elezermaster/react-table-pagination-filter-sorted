@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import User from './user.jsx'
-import Table from 'react-bootstrap/Table';
+import UsersTable from './usersTable.jsx'
 import Pagination from '../components/pagination'
 import {paginate} from '../utils/paginate'
 import PropTypes from 'prop-types'; // ES6
@@ -8,6 +7,7 @@ import GroupList from '../components/groupList'
 import Button from 'react-bootstrap/Button'
 import api from '../API'
 import SearchStatus from './searchStatus'
+import lodash from 'lodash'
 
 const Users = ({onDelete,onToggleBookmark,users}) => {
     console.log('users',users)
@@ -15,6 +15,7 @@ const Users = ({onDelete,onToggleBookmark,users}) => {
   const [activePage, setActivePage] = useState(1)
   const [professions, setProfession] = useState()
   const [selectedProfession, setSelectedProf] = useState()
+  const [sortBy, setSortBy] = useState({iterator: "name", order: "asc"})
 
     const handlePageChange = (pageIndex) => {
         console.log('pageIndx', pageIndex)
@@ -47,21 +48,10 @@ const Users = ({onDelete,onToggleBookmark,users}) => {
         ? users.filter((user) => user.profession.name === selectedProfession.name)
         : users
     const count = filteredUsersByProf.length
-    console.log('filteredUsersByProf',filteredUsersByProf)
-    const userCrop = paginate(filteredUsersByProf, activePage, pageSize)
-    console.log('userCrop', userCrop)
+    const usersSorted = lodash.orderBy(filteredUsersByProf, [sortBy.iterator], [sortBy.order])
+    const userCrop = paginate(usersSorted, activePage, pageSize)
     const startIndex = (activePage - 1) * pageSize
-    const listUsers = userCrop && userCrop.map((user,index) => {
-          return (
-              <User
-                  key={user._id}
-                  user={user}
-                  index={startIndex + index + 1}
-                  onDelete={onDelete}
-                  onToggleBookmark={onToggleBookmark}
-                  />
-          )
-      })
+
     return (
         <React.Fragment>
             <div className="d-flex flex-column p-3">
@@ -92,23 +82,14 @@ const Users = ({onDelete,onToggleBookmark,users}) => {
             </div>
             {count &&
                 (<div className="d-flex flex-column p-3">
-                <Table striped bordered hover>
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Qualities</th>
-                        <th>Profession</th>
-                        <th>Meetings</th>
-                        <th>Rate</th>
-                        <th>Favorites</th>
-                        <td>{/*delete button*/}</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {listUsers}
-                    </tbody>
-                </Table>
+                <UsersTable
+                    userCrop={userCrop}
+                    startIndex={startIndex}
+                    onDelete={onDelete}
+                    onToggleBookmark={onToggleBookmark}
+                    onSort={setSortBy}
+                    currentSort={sortBy}
+                />
                 <div className="d-flex flex-direction-row justify-content-center">
                 <Pagination itemsCount={count} pageSize={pageSize} onPageChange={handlePageChange} activePage={activePage}/>
                 </div>

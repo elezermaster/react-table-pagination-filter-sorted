@@ -10,7 +10,7 @@ const GroupList = ({items,valueProperty,activeProperty,onItemSelect,selected}) =
         }
         return (
             <ListGroup.Item
-                key={items[item][valueProperty]}
+                key={index}//items[item][valueProperty]
                 as="li"
                 onClick={() => onItemSelect(items[item])}
                 className={isSelected}

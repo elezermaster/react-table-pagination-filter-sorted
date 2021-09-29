@@ -18,7 +18,7 @@ function App() {
   const handleToggleBookMark = (userId) => {
       const newStateUsers = [...users]
       const index = newStateUsers.findIndex(user => user._id === userId)
-      newStateUsers[index].favorites = !newStateUsers[index].favorites
+      newStateUsers[index].bookmark = !newStateUsers[index].bookmark
       setUsers(newStateUsers)
   }
   return (

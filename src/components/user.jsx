@@ -2,6 +2,7 @@ import React from "react";
 import Qualitie from "./qualitie";
 import Bookmark from "./bookmark";
 import Button from "react-bootstrap/Button";
+import PropTypes from 'prop-types'
 
 const User = ({user, index, onDelete, onToggleBookmark}) => {
   console.log("user.qualities",user.qualities)
@@ -19,7 +20,7 @@ const User = ({user, index, onDelete, onToggleBookmark}) => {
       <td>
         <Button variant="light" onClick={() => onToggleBookmark(user._id)}>
           {/* {user.favorites?<FaBookmark/>:<FaRegBookmark/>} */}
-          <Bookmark status={user.favorites} />
+          <Bookmark status={user.bookmark} />
         </Button>
       </td>
       <td>
@@ -33,4 +34,10 @@ const User = ({user, index, onDelete, onToggleBookmark}) => {
   );
 };
 
+User.propTypes = {
+  user: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onToggleBookmark: PropTypes.func.isRequired,
+}
 export default User;
